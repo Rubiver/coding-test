@@ -1,7 +1,9 @@
 package com.seowon.coding.service;
 
 import com.seowon.coding.domain.model.Order;
+import com.seowon.coding.domain.model.Order.OrderStatus;
 import com.seowon.coding.domain.model.OrderItem;
+import com.seowon.coding.domain.model.OrderProduct;
 import com.seowon.coding.domain.model.ProcessingStatus;
 import com.seowon.coding.domain.model.Product;
 import com.seowon.coding.domain.repository.OrderRepository;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +67,21 @@ public class OrderService {
         // * order 를 저장
         // * 각 Product 의 재고를 수정
         // * placeOrder 메소드의 시그니처는 변경하지 않은 채 구현하세요.
-        return null;
+    	Order order = new Order();
+    	List<OrderItem> items = new ArrayList<>();
+    	for(int i=0; i<productIds.size(); i++) {
+    		OrderItem orderItem = new OrderItem();
+    		orderItem.setId(productIds.get(i));
+    		orderItem.setQuantity(quantities.get(i));
+    		items.add(orderItem);
+    	}
+    	order.setItems(items);
+    	order.setCustomerName(customerName);
+    	order.setCustomerEmail(customerEmail);    	
+    	order.setStatus(OrderStatus.PENDING);
+    	order.setTotalAmount(null);
+    	order.setOrderDate(LocalDateTime.now());
+        return orderRepository.save(order);
     }
 
     /**

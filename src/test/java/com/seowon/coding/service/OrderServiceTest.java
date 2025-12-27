@@ -2,6 +2,7 @@ package com.seowon.coding.service;
 
 import com.seowon.coding.domain.model.Order;
 import com.seowon.coding.domain.model.OrderItem;
+import com.seowon.coding.domain.model.OrderProduct;
 import com.seowon.coding.domain.model.Product;
 import com.seowon.coding.domain.repository.OrderRepository;
 import com.seowon.coding.domain.repository.ProductRepository;

@@ -1,9 +1,11 @@
 package com.seowon.coding.controller;
 
 import com.seowon.coding.domain.model.Order;
+import com.seowon.coding.domain.model.OrderItem;
 import com.seowon.coding.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,24 @@ public class OrderController {
         }
     }
     
+    @PostMapping("/newOrder")
+    public ResponseEntity<Order> createOrder(@RequestParam Order newOrder){
+    	try {
+    		String customerName = newOrder.getCustomerName();
+        	String customerEmail = newOrder.getCustomerEmail();
+        	List<OrderItem> products = newOrder.getItems(); 
+        	List<Long> productIds = newOrder.getIds(products);
+        	List<Integer> quantities = newOrder.getQuantities(products);
+        	
+        	orderService.placeOrder(customerName, customerEmail, productIds, quantities);
+        	return ResponseEntity.ok(null);
+    	} catch (RuntimeException e) {
+			// TODO: handle exception
+		}
+    	
+		return null;
+    	
+    }
     /**
      * TODO #2: 주문을 생성하는 API 구현
      * 구현목록:

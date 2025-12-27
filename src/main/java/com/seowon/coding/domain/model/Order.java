@@ -38,7 +38,7 @@ public class Order {
     
     private BigDecimal totalAmount;
     
-    // Business logic
+    // Business logic    
     public void addItem(OrderItem item) {
         items.add(item);
         item.setOrder(this);
@@ -49,6 +49,26 @@ public class Order {
         items.remove(item);
         item.setOrder(null);
         recalculateTotalAmount();
+    }
+    
+    public List<Long> getIds(List<OrderItem> item) {
+    	List<Long> Ids = new ArrayList<Long>();
+    	for(int i=0; i<item.size(); i++) {
+    		Long id = item.get(i).getId();
+    		Ids.add(id);
+    	}
+    	
+    	return Ids;
+    }
+    
+    public List<Integer> getQuantities(List<OrderItem> item) {
+    	List<Integer> quantities = new ArrayList<Integer>();
+    	for(int i=0; i<item.size(); i++) {
+    		int quantity = item.get(i).getQuantity();
+    		quantities.add(quantity);
+    	}	
+    	
+    	return quantities;
     }
     
     public void recalculateTotalAmount() {
