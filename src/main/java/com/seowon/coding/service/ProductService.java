@@ -67,7 +67,7 @@ public class ProductService {
             Product p = productRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Product not found: " + id));
 
-            double base = p.getPrice() == null ? 0.0 : p.getPrice().doubleValue();
+            double base = p.getPrice() == null ? 0 : p.getPrice().doubleValue();
             double changed = base + (base * (percentage / 100.0)); // 부동소수점 오류 가능
             if (includeTax) {
                 changed = changed * 1.1; // 하드코딩 VAT 10%, 지역/카테고리별 규칙 미반영
